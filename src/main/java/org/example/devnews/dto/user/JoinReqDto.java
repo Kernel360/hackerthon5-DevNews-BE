@@ -11,12 +11,13 @@ import org.example.devnews.domain.user.UserEnum;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Service
 public  class JoinReqDto{
     // 영문, 숫자는 되고, 길이 최소 2-20자 이내
-    @Pattern(regexp = "^[0-9a-zA-Z]{2,20}$", message = "영문/숫자 2~20자 이내로 작성해주세요.")
     @NotEmpty
     private String username;
 
@@ -28,6 +29,11 @@ public  class JoinReqDto{
     @Email
     @NotEmpty
     private String email;
+
+    private List<String> categories;
+
+    private List<String> companies;
+
 
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()

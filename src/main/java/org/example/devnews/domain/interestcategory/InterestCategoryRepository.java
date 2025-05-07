@@ -1,4 +1,6 @@
 package org.example.devnews.domain.interestcategory;
 
-public interface InterestCategoryRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InterestCategoryRepository extends JpaRepository<InterestCategory, Long> {
 }

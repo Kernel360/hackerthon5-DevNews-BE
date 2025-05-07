@@ -1,4 +1,4 @@
-package org.example.dev;
+package org.example.devnews.dev;
 
 
 import org.example.devnews.domain.category.Category;

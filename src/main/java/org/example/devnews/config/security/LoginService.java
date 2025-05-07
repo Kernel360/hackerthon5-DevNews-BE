@@ -17,8 +17,8 @@ public class LoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userPS =  userRepository.findByUsername(username).orElseThrow(
-                () -> new InternalAuthenticationServiceException("Username " + username + " not found")
+        User userPS =  userRepository.findByEmail(username).orElseThrow(
+                () -> new InternalAuthenticationServiceException("Email " + username + " not found")
         );
         return new LoginUser(userPS);
     }
