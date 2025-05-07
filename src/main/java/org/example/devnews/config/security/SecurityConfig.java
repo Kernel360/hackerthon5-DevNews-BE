@@ -48,7 +48,7 @@ public class SecurityConfig {
                 );
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable());
+                .cors();
 
         // 필터 적용
         http.apply(new CustomSecurityFilterManager());
