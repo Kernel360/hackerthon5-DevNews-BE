@@ -3,6 +3,7 @@ package org.example.devnews.domain.like;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -36,6 +38,7 @@ public class Like {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Builder
     public Like(Long id, Long articleId, Long userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.articleId = articleId;
