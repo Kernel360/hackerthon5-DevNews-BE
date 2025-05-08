@@ -2,9 +2,7 @@ package org.example.devnews.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.devnews.domain.category.CategoryEnum;
 import org.example.devnews.domain.category.CategoryRepository;
-import org.example.devnews.domain.company.CompanyEnum;
 import org.example.devnews.domain.company.CompanyRepository;
 import org.example.devnews.domain.interestcategory.InterestCategory;
 import org.example.devnews.domain.interestcategory.InterestCategoryRepository;
@@ -50,7 +48,7 @@ public class UserService {
         for (String category : joinReqDto.getCategories()) {
             interestCategoryRepository.save(InterestCategory.builder()
                     .userId(userPS.getId())
-                    .categoryId(categoryRepository.findByName(CategoryEnum.fromValue(category)).getId())
+                    .categoryId(categoryRepository.findByName(category).getId())
                       .build()
             );
         }
@@ -58,7 +56,7 @@ public class UserService {
         for(String company : joinReqDto.getCompanies()) {
             interestCompanyRepository.save(InterestCompany.builder()
                     .userId(userPS.getId())
-                    .companyId(companyRepository.findByName(CompanyEnum.fromValue(company)).getId())
+                    .companyId(companyRepository.findByName(company).getId())
                     .build()
             );
         }

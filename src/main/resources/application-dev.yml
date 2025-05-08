@@ -6,17 +6,17 @@ server:
       force: true
 spring:
   datasource:
-    url: jdbc:h2:mem:test;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://52.78.85.0:3306/devnews
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
   h2:
     console:
       enabled: true
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       '[hibernate.default_batch_fetch_size]': 100
       '[hibernate.format_sql]': true

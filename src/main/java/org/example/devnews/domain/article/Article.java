@@ -1,4 +1,4 @@
-package org.example.devnews.domain.category;
+package org.example.devnews.domain.article;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -15,14 +15,26 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "article")
+public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    private Long categoryId;
+
+    private Long companyId;
+
+    private String url;
+
+    private String title;
+
+    @Column(nullable = false)
+    private String summary;
+
+    @Column(nullable = false)
+    private LocalDateTime publishedDate;
 
     @CreatedDate
     @Column(nullable = false)
@@ -33,10 +45,14 @@ public class Category {
     private LocalDateTime updatedAt;
 
     @Builder
-
-    public Category(Long id, String  name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Article(Long id, Long categoryId, Long companyId, String url, String title, String summary, LocalDateTime publishedDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.name = name;
+        this.categoryId = categoryId;
+        this.companyId = companyId;
+        this.url = url;
+        this.title = title;
+        this.summary = summary;
+        this.publishedDate = publishedDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

@@ -1,8 +1,8 @@
-package org.example.devnews.domain.category;
+package org.example.devnews.domain.like;
+
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,14 +15,18 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "likes")
+public class Like {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private Long articleId;
+
+    @Column(nullable = false)
+    private Long userId;
 
     @CreatedDate
     @Column(nullable = false)
@@ -32,11 +36,10 @@ public class Category {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Builder
-
-    public Category(Long id, String  name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Like(Long id, Long articleId, Long userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.name = name;
+        this.articleId = articleId;
+        this.userId = userId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
