@@ -44,4 +44,5 @@ public class ArticleController {
 
     @GetMapping("/article/hot")
     public ArticleListRespDto articleHot(){ return articleService.articleHot(); }
+
 }

@@ -181,6 +181,7 @@ public class ArticleService {
     }
 
 
+
     public ArticleListRespDto articleHot(){
         List<Long> articleIds = likeRepository.findTop5ArticleIdsInLastDay();
         List<ArticleDto> articleList = new ArrayList<>();
@@ -200,4 +201,5 @@ public class ArticleService {
                 .articles(articleList)
                 .build();
     }
+
 }

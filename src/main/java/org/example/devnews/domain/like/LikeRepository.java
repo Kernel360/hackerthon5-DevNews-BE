@@ -18,6 +18,7 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     Like findByUserIdAndArticleId(Long userId, Long articleId);
 
 
+
     @Query(value = """
         SELECT article_id
         FROM likes
@@ -27,8 +28,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
         LIMIT 5
     """, nativeQuery = true)
     List<Long> findTop5ArticleIdsInLastDay();
-
-
 
 
 }
