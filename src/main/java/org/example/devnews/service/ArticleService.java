@@ -37,7 +37,7 @@ public class ArticleService {
 
         List<ArticleDto> articleList = new ArrayList<>();
         CompanyType companyType = CompanyType.fromValue(articleListReqDto.getType());
-        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "publishedDate"));
 
         Page<Article> articles = articleRepository.findByCompanyType(companyType,(Pageable)pageRequest);
         articles.forEach(article -> {
@@ -69,7 +69,7 @@ public class ArticleService {
         List<Company> companies = companyRepository.findAll();
         CompanyType companyType = CompanyType.fromValue(articleListReqDto.getType());
         Long categoryId = categoryRepository.findByName(articleListReqDto.getCategory()).getId();
-        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "publishedDate"));
         Page<Article> articles = articleRepository.findByCompanyTypeAndCategory(companyType, categoryId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
@@ -99,7 +99,7 @@ public class ArticleService {
         List<Category> categories = categoryRepository.findAll();
         List<Company> companies = companyRepository.findAll();
         Long companyId = companyRepository.findByName(articleListReqDto.getCompanyName()).getId();
-        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "publishedDate"));
         Page<Article> articles = articleRepository.findByCompanyTypeAndCompany(companyType, companyId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
@@ -130,7 +130,7 @@ public class ArticleService {
         Long companyId = companyRepository.findByName(articleListReqDto.getCompanyName()).getId();
         List<Category> categories = categoryRepository.findAll();
         List<Company> companies = companyRepository.findAll();
-        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of(Math.toIntExact(articleListReqDto.getPage()), Math.toIntExact(articleListReqDto.getCount()), Sort.by(Sort.Direction.DESC, "publishedDate"));
         Page<Article> articles = articleRepository.findByCompanyTypeAndCategoryAndCompany(companyType,categoryId, companyId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
@@ -178,6 +178,28 @@ public class ArticleService {
                 .articles(articleList)
                 .build();
 
+    }
+
+
+
+    public ArticleListRespDto articleHot(){
+        List<Long> articleIds = likeRepository.findTop5ArticleIdsInLastDay();
+        List<ArticleDto> articleList = new ArrayList<>();
+        for(Long articleId : articleIds){
+            articleRepository.findById(articleId).ifPresent(article -> {
+                articleList.add( ArticleDto.builder()
+                        .id(article.getId())
+                        .title(article.getTitle())
+                        .url(article.getUrl())
+                        .publishDate(article.getPublishedDate())
+                        .like(likeRepository.countByArticleId(article.getId()))
+                        .build()
+                );
+            });
+        }
+        return ArticleListRespDto.builder()
+                .articles(articleList)
+                .build();
     }
 
 }

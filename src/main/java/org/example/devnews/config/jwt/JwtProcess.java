@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtProcess {
     public static String create(LoginUser loginUser) {
         String jwtToken = JWT.create()
-                .withSubject("bank")
+                .withSubject("devnews")
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtVO.EXPIRATION_TIME))
                 .withClaim("id", loginUser.getUser().getId())
                 .withClaim("role", loginUser.getUser().getRole() + "")

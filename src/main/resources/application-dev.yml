@@ -6,13 +6,11 @@ server:
       force: true
 spring:
   datasource:
-    url: jdbc:mysql://52.78.85.0:3306/devnews
+    url: jdbc:mysql://${MYSQL_HOST}/devnews
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1234
-  h2:
-    console:
-      enabled: true
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
   jpa:
     open-in-view: false
     hibernate:
@@ -20,7 +18,6 @@ spring:
     properties:
       '[hibernate.default_batch_fetch_size]': 100
       '[hibernate.format_sql]': true
-    show-sql: true
-  output:
-    ansi:
-      enabled: always
+
+jwt:
+  secret ${JWT_SECRET}
