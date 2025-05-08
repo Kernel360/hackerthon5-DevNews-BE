@@ -22,4 +22,18 @@ public class ArticleController {
         return articleService.getArticles(articleListReqDto);
     }
 
+    @GetMapping("/article/category")
+    public ArticleListRespDto articleListCategory(@ModelAttribute ArticleListReqDto articleListReqDto) {
+        return articleService.getArticlesByCategory(articleListReqDto);
+    }
+
+    @GetMapping("/article/company")
+    public ArticleListRespDto articleListCompany(@ModelAttribute ArticleListReqDto articleListReqDto) {
+        return articleService.getArticlesByCompany(articleListReqDto);
+    }
+
+    @GetMapping("/article/category-company")
+    public ArticleListRespDto articleListCategoryCompany(@ModelAttribute ArticleListReqDto articleListReqDto) {
+        return articleService.getArticlesByCategoryAndCompany(articleListReqDto);
+    }
 }

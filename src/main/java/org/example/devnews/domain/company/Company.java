@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.devnews.domain.category.CategoryEnum;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,15 +15,14 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "company_tb")
+@Table(name = "company")
 public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "company_name", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CompanyEnum name;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String url;
@@ -45,7 +43,7 @@ public class Company {
     private CompanyType companyType;
 
     @Builder
-    public Company(Long id, CompanyEnum name, String url, String logo, LocalDateTime createdAt, LocalDateTime updatedAt, CompanyType companyType) {
+    public Company(Long id, String name, String url, String logo, LocalDateTime createdAt, LocalDateTime updatedAt, CompanyType companyType) {
         this.id = id;
         this.name = name;
         this.url = url;

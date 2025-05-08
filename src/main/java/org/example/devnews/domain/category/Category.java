@@ -15,15 +15,14 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "category_tb")
+@Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "category_name", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CategoryEnum name;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @CreatedDate
     @Column(nullable = false)
@@ -35,7 +34,7 @@ public class Category {
 
     @Builder
 
-    public Category(Long id, CategoryEnum name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Category(Long id, String  name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
