@@ -11,7 +11,7 @@ public enum CompanyEnum {
     GOOGLE_DEVELOPERS("구글디벨로퍼스"), KAKAO("카카오"), KAKAO_PAY("카카오 페이"),
     GABIA("가비아"), DEVOCEAN("데보션"), CARROT_MARKET("당근마켓");
 
-    private String value;
+    private final String value;
 
     public static CompanyEnum fromValue(String value) {
         for (CompanyEnum companyEnum : CompanyEnum.values()) {

@@ -1,11 +1,9 @@
-package org.example.devnews.domain.company;
+package org.example.devnews.domain.article;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.devnews.domain.category.CategoryEnum;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,21 +14,26 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "company_tb")
-public class Company {
+@Table(name = "article_tb")
+public class Article {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "company_name", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CompanyEnum name;
+    private Long categoryId;
 
-    @Column(nullable = false)
+    private Long companyId;
+
     private String url;
 
+    private String title;
+
     @Column(nullable = false)
-    private String logo;
+    private String summary;
+
+    @Column(nullable = false)
+    private LocalDateTime publishedDate;
 
     @CreatedDate
     @Column(nullable = false)
@@ -40,15 +43,4 @@ public class Company {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CompanyType companyType;
-
-    @Builder
-    public Company(Long id, CompanyEnum name, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }

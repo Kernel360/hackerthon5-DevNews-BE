@@ -1,11 +1,10 @@
-package org.example.devnews.domain.company;
+package org.example.devnews.domain.like;
+
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.devnews.domain.category.CategoryEnum;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,21 +15,18 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "company_tb")
-public class Company {
+@Table(name = "like_tb")
+public class Like {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "company_name", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CompanyEnum name;
+    @Column(nullable = false)
+    private Long articleId;
 
     @Column(nullable = false)
-    private String url;
-
-    @Column(nullable = false)
-    private String logo;
+    private Long userId;
 
     @CreatedDate
     @Column(nullable = false)
@@ -40,14 +36,10 @@ public class Company {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CompanyType companyType;
-
-    @Builder
-    public Company(Long id, CompanyEnum name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Like(Long id, Long articleId, Long userId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.name = name;
+        this.articleId = articleId;
+        this.userId = userId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
