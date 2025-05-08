@@ -13,8 +13,9 @@ public enum CompanyType {
     private final String value;
 
     public static CompanyType fromValue(String value){
+        System.out.println("type: " + value);
         for(CompanyType type : values()){
-            if(type.value.equals(value)){
+            if(type.getValue().equals(value)){
                 return type;
             }
         }

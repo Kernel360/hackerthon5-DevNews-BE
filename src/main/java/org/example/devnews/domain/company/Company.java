@@ -29,7 +29,7 @@ public class Company {
     @Column(nullable = false)
     private String url;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String logo;
 
     @CreatedDate
@@ -45,10 +45,13 @@ public class Company {
     private CompanyType companyType;
 
     @Builder
-    public Company(Long id, CompanyEnum name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Company(Long id, CompanyEnum name, String url, String logo, LocalDateTime createdAt, LocalDateTime updatedAt, CompanyType companyType) {
         this.id = id;
         this.name = name;
+        this.url = url;
+        this.logo = logo;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.companyType = companyType;
     }
 }

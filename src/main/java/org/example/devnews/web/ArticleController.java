@@ -7,9 +7,7 @@ import org.example.devnews.dto.article.ArticleListReqDto;
 import org.example.devnews.dto.article.ArticleListRespDto;
 import org.example.devnews.service.ArticleService;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Article", description = "아티클 컨트롤러")
 @RequiredArgsConstructor
@@ -20,9 +18,8 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/article")
-    public ArticleListRespDto articleList(ArticleListReqDto articleListReqDto) {
-        return null;
-
+    public ArticleListRespDto articleList(@ModelAttribute ArticleListReqDto articleListReqDto) {
+        return articleService.getArticles(articleListReqDto);
     }
 
 }
