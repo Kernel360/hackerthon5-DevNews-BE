@@ -13,4 +13,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     """)
     Long countByArticleId(@Param("articleId") Long articleId);
 
+    Like findByUserIdAndArticleId(Long userId, Long articleId);
+
 }

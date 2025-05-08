@@ -36,4 +36,9 @@ public class ArticleController {
     public ArticleListRespDto articleListCategoryCompany(@ModelAttribute ArticleListReqDto articleListReqDto) {
         return articleService.getArticlesByCategoryAndCompany(articleListReqDto);
     }
+
+    @GetMapping("/article/new")
+    public ArticleListRespDto articleNew(){
+        return articleService.articleNew();
+    }
 }

@@ -27,7 +27,6 @@ public class ArticleService {
     private final CategoryRepository categoryRepository;
     private final LikeRepository likeRepository;
 
-
     public ArticleListRespDto getArticles(ArticleListReqDto articleListReqDto) {
 
         // TODO
@@ -43,13 +42,14 @@ public class ArticleService {
         Page<Article> articles = articleRepository.findByCompanyType(companyType,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
+                    .id(article.getId())
                     .title(article.getTitle())
                     .category(categories.stream().filter((category -> category.getId().equals(article.getCategoryId()))).findFirst().get().getName())
                     .companyName(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getName())
                     .companyLogo(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getLogo())
                     .url(article.getUrl())
                     .publishDate(article.getPublishedDate())
-                    .like(0L)
+                    .like(likeRepository.countByArticleId(article.getId()))
                     .build()
             );
         });
@@ -73,13 +73,14 @@ public class ArticleService {
         Page<Article> articles = articleRepository.findByCompanyTypeAndCategory(companyType, categoryId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
+                    .id(article.getId())
                     .title(article.getTitle())
                     .category(categories.stream().filter((category -> category.getId().equals(article.getCategoryId()))).findFirst().get().getName())
                     .companyName(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getName())
                     .companyLogo(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getLogo())
                     .url(article.getUrl())
                     .publishDate(article.getPublishedDate())
-                    //.like(likeRepository.countByArticleId(article.getId()))
+                    .like(likeRepository.countByArticleId(article.getId()))
                     .build()
             );
         });
@@ -102,6 +103,7 @@ public class ArticleService {
         Page<Article> articles = articleRepository.findByCompanyTypeAndCompany(companyType, companyId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
+                    .id(article.getId())
                     .title(article.getTitle())
                     .category(categories.stream().filter((category -> category.getId().equals(article.getCategoryId()))).findFirst().get().getName())
                     .companyName(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getName())
@@ -132,6 +134,7 @@ public class ArticleService {
         Page<Article> articles = articleRepository.findByCompanyTypeAndCategoryAndCompany(companyType,categoryId, companyId,(Pageable)pageRequest);
         articles.forEach(article -> {
             articleList.add( ArticleDto.builder()
+                    .id(article.getId())
                     .title(article.getTitle())
                     .category(categories.stream().filter((category -> category.getId().equals(article.getCategoryId()))).findFirst().get().getName())
                     .companyName(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getName())
@@ -146,6 +149,32 @@ public class ArticleService {
         return ArticleListRespDto.builder()
                 .count(articles.getSize())
                 .page(articles.getTotalPages())
+                .articles(articleList)
+                .build();
+
+    }
+
+    public ArticleListRespDto articleNew(){
+        List<Category> categories = categoryRepository.findAll();
+        List<Company> companies = companyRepository.findAll();
+        List<ArticleDto> articleList = new ArrayList<>();
+        List<Article> articles = articleRepository.findTop3ByOrderByPublishedDateDesc();
+
+        articles.forEach(article -> {
+            articleList.add( ArticleDto.builder()
+                    .id(article.getId())
+                    .title(article.getTitle())
+                    .category(categories.stream().filter((category -> category.getId().equals(article.getCategoryId()))).findFirst().get().getName())
+                    .companyName(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getName())
+                    .companyLogo(companies.stream().filter((company-> company.getId().equals(article.getCompanyId()))).findFirst().get().getLogo())
+                    .url(article.getUrl())
+                    .publishDate(article.getPublishedDate())
+                    .like(likeRepository.countByArticleId(article.getId()))
+                    .build()
+            );
+        });
+
+        return ArticleListRespDto.builder()
                 .articles(articleList)
                 .build();
 

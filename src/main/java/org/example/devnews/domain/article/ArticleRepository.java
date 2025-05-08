@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -49,4 +51,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             AND a.companyId = :companyId
     """)
     Page<Article> findByCompanyTypeAndCategoryAndCompany(@Param("type") CompanyType type, @Param("categoryId")Long categoryId ,@Param("companyId")Long companyId ,Pageable pageable);
+
+    List<Article> findTop3ByOrderByPublishedDateDesc();
+
+
 }
+
