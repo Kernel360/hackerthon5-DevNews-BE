@@ -34,7 +34,7 @@ public class Article {
     @Column
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String summary;
 
     @Column(nullable = false)
