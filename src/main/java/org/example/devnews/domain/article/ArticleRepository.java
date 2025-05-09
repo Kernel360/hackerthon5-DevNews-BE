@@ -1,6 +1,7 @@
 package org.example.devnews.domain.article;
 
 import org.example.devnews.domain.company.CompanyType;
+import org.example.devnews.dto.article.MailDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -54,6 +55,21 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findTop3ByOrderByPublishedDateDesc();
 
+    @Query("""
+        SELECT new org.example.devnews.dto.article.MailDto(a.url, a.title, c.name, a.summary)
+        FROM Article a
+        JOIN Company c ON a.companyId = c.id
+        WHERE a.categoryId IN :categoryId
+        ORDER BY a.publishedDate DESC
+    """)
+    List<MailDto> findByCategoryId(@Param("categoryId") List<Long> categoryId, Pageable pageable);
 
+    @Query("""
+        SELECT new org.example.devnews.dto.article.MailDto(a.url, a.title, c.name, a.summary)
+        FROM Article a
+        JOIN Company c ON a.companyId = c.id
+        WHERE a.companyId IN :companyId
+        ORDER BY a.publishedDate DESC
+    """)
+    List<MailDto> findByCompanyId(@Param("companyId")List<Long> companyId, Pageable pageable);
 }
-

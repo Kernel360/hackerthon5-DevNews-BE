@@ -22,12 +22,16 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private Long categoryId;
 
+    @Column
     private Long companyId;
 
+    @Column(length=1024)
     private String url;
 
+    @Column
     private String title;
 
     @Column(nullable = false)
