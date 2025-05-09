@@ -32,7 +32,7 @@ public class SmtpService {
     public final InterestCategoryRepository interestCategoryRepository;
     private final JavaMailSender javaMailSender;
 
-    @Scheduled(cron = "0 17 19 * * *")
+    @Scheduled(cron = "0 25 10 * * *")
     public void foundReceiver() {
         LocalDateTime today = LocalDateTime.now();
         int month = today.getMonthValue();
@@ -53,9 +53,6 @@ public class SmtpService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setTo(user.getEmail());
             mimeMessageHelper.setSubject(String.format("%d월 %d일 DevNews 뉴스레터", month, day));
-
-            //mimeMessageHelper.setTo("ocar1115.shin@gmail.com");
-            //mimeMessageHelper.setSubject("테스트 메일");
 
             List<MailDto> categoryArticles = articleRepository.findByCategoryId(interestCategories, PageRequest.of(0, 2));
             List<MailDto> companyArticles = articleRepository.findByCompanyId(interestCompanies, PageRequest.of(0, 2));
@@ -148,9 +145,9 @@ public class SmtpService {
         }
 
         html.append(String.format("""
-            <div class="container">
-                    <h1>💼 %s 님이 관심있는 기업 소식을 가져왔어요</h1>
-            </div>
+            <h1 style="font-size: 24px; color: #333333; margin: 40px 0 20px 0; text-align: center;">
+                💼 %s 님이 관심있는 기업 소식을 가져왔어요
+            </h1>
             """, userName));
 
         for (MailDto article : companyArticles) {
