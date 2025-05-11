@@ -114,15 +114,8 @@ src/main/java/org/example/devnews/
 - MySQL
 - Gradle
 
-### API 문서
-
-Swagger UI를 통해 API 문서를 확인할 수 있습니다:
-```
-http://localhost:8080/swagger-ui.html
-```
-
 ### 개발 환경 설정
 
 1. MySQL 데이터베이스 설정
-2. SMTP 서버 설정 (이메일 인증용)
+2. SMTP 서버 설정 (이메일 발송용)
 3. JWT 시크릿 키 설정
